@@ -1,0 +1,63 @@
+---
+title: "Project-3"
+author: "Sarba"
+date: "12/3/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library (tidyverse)
+```
+
+
+```{r}
+data <- read_csv("/home/upretys/STA 518/Project/Project-3/worldometer_data.csv")
+df <- read_csv("/home/upretys/STA 518/Project/Project-3/country_wise_latest.csv")
+```
+```{r}
+data <- data %>%
+  rename ("New cases" = "NewCases", "Total cases" = "TotalCases", "Total deaths" = "TotalDeaths", "New deaths" = "NewDeaths", "Total recovered" = "TotalRecovered", "New recovered" = "NewRecovered", "Active cases" = "ActiveCases", "Total tests" = "TotalTests")
+
+```
+
+```{r}
+data <- data %>%
+  select(`Country/Region`:Population, `Tot Cases/1M pop`: `Total tests`)
+
+```
+
+
+```{r}
+j_data <- data %>%
+  left_join(df, by = "Country/Region")
+```
+
+```{r}
+j_data <- j_data %>% 
+  drop_na()
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
