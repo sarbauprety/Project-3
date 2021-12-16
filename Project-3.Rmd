@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library (tidyverse)
 ```
 
-
+I have imported two datasets into R using read_csv for this project from my GitHub account.
 ```{r}
 # Importing datasets
 data <- read_csv("/home/upretys/STA 518/Project/Project-3/worldometer_data.csv")
@@ -26,14 +26,14 @@ data <- data %>%
   rename ("New cases" = "NewCases", "Total cases" = "TotalCases", "Total deaths" = "TotalDeaths", "New deaths" = "NewDeaths", "Total recovered" = "TotalRecovered", "New recovered" = "NewRecovered", "Active cases" = "ActiveCases", "Total tests" = "TotalTests")
 
 ```
-
+I used the rename function to change the names of the columns so that it is easier to write.
 ```{r}
 # Restructuring the dataset
 data <- data %>%
   select(`Country/Region`:Population, `Tot Cases/1M pop`: `Total tests`)
 
 ```
-
+I used the select function to isolate the columns I needed to look at for my analysis and overwrote the existing data with the cleaned one. To make things easier I used ":" to select all the middle columns that are in between the beginning column and the end column that are mentioned.
 
 ```{r}
 # Joining two datasets
@@ -41,12 +41,14 @@ j_data <- data %>%
   left_join(df, by = "Country/Region")
 ```
 
+I joined "df" with "data" as there were essential information in "df" that were not in "data". I decided to do the left_join() because I wanted all the values from "data" but not all from "df". I used the common variable "Country/Region" to join the two datasets.
+
 ```{r}
 # Dropping NAs
 j_data <- j_data %>% 
   drop_na()
 ```
-
+In almost every dataset, there are missing values. I used the above function to remove all the missing values so that I can work with a tidier dataset.
 
 ```{r}
 # Top 10 countries with highest active cases
@@ -55,6 +57,7 @@ j_data  %>%
   head(10)
 ```
 
+I have used arrange(desc) to find out the top 10 countries with the highest active cases. From the table above, we can see that Brazil has the highest active cases.
 ```{r}
 # Top 10 countries with highest deaths
 j_data  %>% 
@@ -62,3 +65,4 @@ j_data  %>%
   head(10)
 ```
 
+As same as the previous table, I have used arrange(desc) to find out the top 10 countries with the highest deaths recorded. From the table above, we can see that Brazil has the highest deaths recorded.
